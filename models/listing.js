@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Review = require('./review');
 const Schema = mongoose.Schema;
 
 const listingSchema = new Schema({
@@ -26,6 +27,19 @@ const listingSchema = new Schema({
     },
     country: {
         type: String
+    },
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Review"
+        }
+    ]
+})
+
+//Middleware for handling deletion. Like if we deleting listing then all reviews should deleted automatically
+listingSchema.post("findOneAndDelete",async (listing)=>{
+    if(listing){
+        await Review.deleteMany({_id: {$in: listing.reviews}})
     }
 })
 
