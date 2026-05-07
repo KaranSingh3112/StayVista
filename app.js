@@ -11,7 +11,6 @@ const User = require("./models/user");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
-
 const listingRouter = require("./routes/listing")
 const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
@@ -56,18 +55,19 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
     next();
 })
 
 //Demo user
-app.get("/demoUser",async (req,res) => {
-    let fakeuser = new User({
-        email: "karan@gmail.com",
-        username: "Soham",
-    })
-    let result = await User.register(fakeuser,"password");
-    res.send(result);
-})
+// app.get("/demoUser",async (req,res) => {
+//     let fakeuser = new User({
+//         email: "karan@gmail.com",
+//         username: "Soham",
+//     })
+//     let result = await User.register(fakeuser,"password");
+//     res.send(result);
+// })
 
 app.use("/listings",listingRouter)
 app.use("/listings/:id/reviews",reviewRouter);
