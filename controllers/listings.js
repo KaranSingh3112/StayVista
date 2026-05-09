@@ -11,8 +11,11 @@ module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
 }
 module.exports.newListing = async (req, res) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
     let newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
+    newListing.image = {url, filename}
     await newListing.save();
     req.flash("success","New listing added!!!");
     res.redirect("/listings");
