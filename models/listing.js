@@ -32,7 +32,19 @@ const listingSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User"
+    },
+    geometry: {
+    type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+        required: true
+    },
+    coordinates: {
+        type: [Number],
+        required: true
     }
+}
 })
 
 //Middleware for handling deletion. Like if we deleting listing then all reviews should deleted automatically

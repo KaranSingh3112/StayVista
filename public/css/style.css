@@ -1,90 +1,109 @@
-body{
+body {
     font-family: "Plus Jakarta Sans", sans-serif !important;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
-.container{
+
+.container {
     flex: 1;
 }
 
-.navbar{
+.navbar {
     background-color: white;
     height: 4rem;
 }
-.fa-solid{
+
+.fa-solid {
     color: rgb(247, 63, 63) !important;
     font-size: 2rem;
 }
 
-.f-info-links a{
+.f-info-links a {
     text-decoration: none;
     color: #222222;
 }
-.f-info-links a:hover{
+
+.f-info-links a:hover {
     text-decoration: underline;
 }
-.f-info-socials, .f-info-links, .f-info-brand{
+
+.f-info-socials,
+.f-info-links,
+.f-info-brand {
     width: 100%;
     font-size: 1.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.f-info{
+
+.f-info {
     height: 8rem;
     background-color: #ebebeb;
     display: flex;
     text-align: center;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: space-evenly   
+    align-items: space-evenly
 }
 
 /* Card */
-.listing-card{
+.listing-card {
     border: none !important;
     margin-bottom: 2rem;
 }
-.card-img-top{
+
+.card-img-top {
     width: 100% !important;
     border-radius: 1rem !important;
     object-fit: cover !important;
 }
-.card-body{
+
+.card-body {
     padding: 0 !important;
 }
-.listing-link{
+
+.listing-link {
     text-decoration: none;
 }
-.card-img-overlay{
+
+.card-img-overlay {
     opacity: 0;
 }
-.card-img-overlay:hover{
+
+.card-img-overlay:hover {
     opacity: 0.2;
     background-color: white;
 }
 
 /* New Listing */
-.new-btn{
+.new-btn {
     background-color: rgb(247, 63, 63) !important;
     border: none !important;
 }
 
 /* Show Page */
-.show-img{
+.show-img {
     height: 50vh;
 }
 
-.show-card{
+.show-card {
     padding-left: 0;
     padding-right: 0;
 }
 
-.btns{
+.btns {
     display: flex;
 }
-.edit-btn{
+
+.edit-btn {
     background-color: rgb(247, 63, 63) !important;
     border: none !important;
+}
+
+/* MAP */
+#map {
+    height: 400px;
+    width: 80vh;
 }

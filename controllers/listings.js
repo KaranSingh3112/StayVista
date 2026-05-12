@@ -1,4 +1,5 @@
 const Listing = require("../models/listing")
+const axios = require("axios");
 
 //For home page view
 module.exports.index = async (req, res) => {
@@ -15,24 +16,48 @@ module.exports.newListing = async (req, res) => {
     let filename = req.file.filename;
     let newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
-    newListing.image = {url, filename}
+    newListing.image = { url, filename }
+    //Geocoding
+    const location = req.body.listing.location;
+    const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?q=${location}&format=jsonv2`,
+        {
+            headers: {
+                "User-Agent": "StayVistaClone/1.0"
+            }
+        }
+    );
+    const data = response.data;
+    if (data.length === 0) {
+        req.flash("error", "Location not found!");
+        return res.redirect("/listings/new");
+    }
+    const latitude = data[0].lat;
+    const longitude = data[0].lon;
+    newListing.geometry = {
+        type: "Point",
+        coordinates: [longitude, latitude]
+    };
+
     await newListing.save();
-    req.flash("success","New listing added!!!");
+    req.flash("success", "New listing added!!!");
     res.redirect("/listings");
 }
 
 //To show single listing
-module.exports.showListing =async (req, res) => {
+module.exports.showListing = async (req, res) => {
     let { id } = req.params;
     //Using nested populate
-    const listing = await Listing.findById(id).populate({path: "reviews", populate: {
-        path: "author",
-    }}).populate("owner");
-    if(!listing){
-        req.flash("error","Listing not found!!!");
+    const listing = await Listing.findById(id).populate({
+        path: "reviews", populate: {
+            path: "author",
+        }
+    }).populate("owner");
+    if (!listing) {
+        req.flash("error", "Listing not found!!!");
         res.redirect("/listings")
-    }else{
-    res.render("listings/show.ejs", { listing })
+    } else {
+        res.render("listings/show.ejs", { listing })
     }
 }
 
@@ -40,23 +65,25 @@ module.exports.showListing =async (req, res) => {
 module.exports.updateForm = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
-    if(!listing){
-        req.flash("error","Listing you are trying to edit does not exist");
+    if (!listing) {
+        req.flash("error", "Listing you are trying to edit does not exist");
         res.redirect("/listings");
-    }else{
-    res.render("listings/edit.ejs", { listing });
+    } else {
+        let originalImageUrl = listing.image.url;
+        duplicateImageUrl = originalImageUrl.replace("/upload", "/upload/w_250")
+        res.render("listings/edit.ejs", { listing, duplicateImageUrl });
     }
 }
 module.exports.upadateListing = async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing })
-    if(typeof req.file !== "undefined"){
+    if (typeof req.file !== "undefined") {
         let url = req.file.path;
         let filename = req.file.filename;
-        listing.image = {url, filename}
+        listing.image = { url, filename }
         await listing.save();
     }
-    req.flash("success","Listing updated!!!");
+    req.flash("success", "Listing updated!!!");
     res.redirect(`/listings/${id}`);
 }
 
@@ -64,6 +91,6 @@ module.exports.upadateListing = async (req, res) => {
 module.exports.deleteListing = async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
-    req.flash("success","Listing Deleted!!!");
+    req.flash("success", "Listing Deleted!!!");
     res.redirect("/listings")
 }
