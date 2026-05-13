@@ -39,12 +39,16 @@ const listingSchema = new Schema({
         enum: ["Point"],
         default: "Point",
         required: true
-    },
+        },
     coordinates: {
         type: [Number],
         required: true
+        }
+    },
+    category: {
+        type: String,
+        enum: ["Rooms", "Iconic-cities", "Mountains", "Castles", "Pools","Camping","Farms","Arctics"]
     }
-}
 })
 
 //Middleware for handling deletion. Like if we deleting listing then all reviews should deleted automatically

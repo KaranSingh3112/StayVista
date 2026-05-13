@@ -52,12 +52,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="dropdown">
+                        <label for="category">Choose Category</label>
+                        <select name="listing[category]" id="category" class="form-select" required>
+                            <option value="Rooms">Rooms</option>
+                            <option value="Iconic Cities">Iconic Cities</option>
+                            <option value="Mountains">Mountains</option>
+                            <option value="Castles">Castles</option>
+                            <option value="Pools">Pools</option>
+                            <option value="Pools">Camping</option>
+                            <option value="Pools">Farms</option>
+                            <option value="Pools">Arctics</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a catagory.
+                        </div>
+                    </div>
                     <div class="mb-2">
                         <label for="text" class="form-label">Country</label>
                         <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control"
                             required>
                         <div class="invalid-feedback">
-                            Please Enter a DescriptCountryion.
+                            Please Enter a Country.
                         </div>
                     </div>
                     <button class="btn btn-dark edit-btn">Update</button>

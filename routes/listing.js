@@ -21,9 +21,9 @@ router.route("/:id")
     .put(isLoggedin, isOwner, validateListing, upload.single('listing[image]'), wrapAsync(listingController.upadateListing))
     .delete(isLoggedin,isOwner, wrapAsync(listingController.deleteListing))
 
-
-
 //Editing listing
 router.get("/:id/edit",isLoggedin,isOwner, wrapAsync(listingController.updateForm))
+
+// app.get("/listings/:ca")
 
 module.exports = router;

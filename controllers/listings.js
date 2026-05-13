@@ -3,7 +3,13 @@ const axios = require("axios");
 
 //For home page view
 module.exports.index = async (req, res) => {
-    let allListings = await Listing.find({});
+    let {category} = req.query;
+    let allListings;
+    if(category){
+        allListings = await Listing.find({ category: category });
+    }else{
+        allListings = await Listing.find({});
+    }
     res.render("listings/index.ejs", { allListings });
 }
 
@@ -38,7 +44,6 @@ module.exports.newListing = async (req, res) => {
         type: "Point",
         coordinates: [longitude, latitude]
     };
-
     await newListing.save();
     req.flash("success", "New listing added!!!");
     res.redirect("/listings");
