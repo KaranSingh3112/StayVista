@@ -2,7 +2,6 @@ if(process.env.NODE_ENV != "production"){
     require('dotenv').config()
 }
 
-
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose");
@@ -11,6 +10,7 @@ const methodOverride = require("method-override")
 const ejsMate = require("ejs-mate")
 const ExpressError = require("./utils/ExpressError")
 const session = require("express-session");
+const MongoStore = require('connect-mongo').default;
 const flash = require("connect-flash");
 const User = require("./models/user");
 const passport = require("passport");
@@ -27,16 +27,32 @@ app.set("view engine", "ejs")
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")));
 
+// const MONGO_URL = 'mongodb://127.0.0.1:27017/StayVista'
+const dbUrl = process.env.ATLASDB_URL;
+
 main().then(() => {
     console.log("Database Connected");
 }).catch((err) => {
     console.log(err);
 })
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/StayVista')
+    await mongoose.connect(dbUrl)
 }
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: "mysupersecretkey"
+    },
+    touchAfter: 24 * 3600,
+})
+
+store.on("error",(err)=>{
+    console.log("ERROR in MONGO SESSION", err);
+})
+
 const sessionOption = {
+    store,
     secret: "mysupersecretcode",
     resave: false,
     saveUninitialized: true,
