@@ -108,3 +108,62 @@ body {
     width: 80vh;
 }
 
+/* Style for filters */
+    #filters{
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        align-items: center;
+    }
+    .filter{
+        margin-right: 2rem;
+        margin-top: 1rem;
+        opacity: 0.7;
+    }
+    .filter:hover{
+        opacity: 1;
+        cursor: pointer;
+    }
+    .category{
+        text-decoration: none;
+        color: black;
+    }
+    .tax-info{
+        display: none;
+    }
+    .tax-toggle{
+        border: 1px solid black;
+        border-radius: 1rem;
+        height: 3rem;
+        padding: 10px;
+        margin-left: 2rem;
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+    }
+
+/* Style of navbar search feature */
+  .btn-search{
+    background-color: rgb(247, 63, 63);
+    color: #fff;
+    border-radius: 25px;
+    padding: 0 1rem 0 1rem;
+  }
+  .btn-search:hover{
+    background-color: rgb(247, 63, 63);
+    color: #fff;
+  }
+  .btn-search i{
+    display: inline;
+    margin-right: 0.5rem;
+  }
+  .search-input{
+    border-radius: 25px;
+  }
+
+@media (max-width: 767px){
+   .navbar-collapse{
+      background:white;
+      padding:1rem;
+   }
+}
