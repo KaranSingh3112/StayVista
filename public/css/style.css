@@ -81,25 +81,41 @@ body {
 .new-btn {
     background-color: rgb(247, 63, 63) !important;
     border: none !important;
+    width: 100px;
 }
 
 /* Show Page */
 .show-img {
     height: 50vh;
+    width: 100%;
+    object-fit: cover;
 }
 
 .show-card {
     padding-left: 0;
     padding-right: 0;
+    max-width: 100%;
 }
 
 .btns {
     display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btns .btn {
+    min-width: 120px;
 }
 
 .edit-btn {
     background-color: rgb(247, 63, 63) !important;
     border: none !important;
+}
+
+@media (max-width: 991px) {
+    .btns {
+        justify-content: flex-start;
+    }
 }
 
 /* MAP */
@@ -165,5 +181,22 @@ body {
    .navbar-collapse{
       background:white;
       padding:1rem;
+   }
+   #map {
+      width: 100% !important;
+   }
+   .show-img {
+      height: auto !important;
+   }
+   .btns {
+      flex-direction: column !important;
+   }
+   .f-info {
+      flex-direction: column !important;
+      height: auto !important;
+   }
+   .f-info-links, .f-info-socials, .f-info-brand {
+      width: 100% !important;
+      justify-content: center !important;
    }
 }
