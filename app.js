@@ -81,7 +81,12 @@ app.use((req,res,next)=>{
 })
 
 app.get("/",(req,res)=>{
-    res.redirect("/signup")
+    if(res.locals.currUser){
+        res.redirect("/listings")
+    }else{
+        res.redirect("/signup")
+    }
+    
 })
 
 app.use("/listings",listingRouter)
